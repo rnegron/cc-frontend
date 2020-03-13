@@ -16,7 +16,11 @@ class Footer extends React.Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img className="self-center pb-1" src={GithubLogo} alt="Github Logo" />
+            <img
+              className="self-center pb-1"
+              src={GithubLogo}
+              alt="Github Logo"
+            />
           </a>
         </span>
       </nav>
