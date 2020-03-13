@@ -5,9 +5,9 @@ class MovieCard extends React.Component<MovieCardPropsInterface, {}> {
   render() {
     const { movie } = this.props;
     return (
-      <div className="transition duration-300 ease-out transform hover:-translate-y-1 hover:scale-110 m-4 px-2 pt-8 pb-1 rounded overflow-hidden shadow-xl">
+      <div className="transition duration-300 ease-out transform md:hover:-translate-y-1 md:hover:scale-110 w-1/2 md:w-auto px-2 md:m-4 md:px-2 pt-8 pb-1 rounded overflow-hidden shadow-xl">
         <a
-          className="flex flex-col content-center"
+          className="flex flex-initial flex-col content-center"
           href={`https://caribbeancinemas.com/movie/${movie.movieId}/`}
           target="_blank"
           rel="noopener noreferrer"
