@@ -65,7 +65,8 @@
     "postcss-cli": "^7.1.0",
     "prettier": "^1.19.1",
     "start-server-and-test": "^1.10.8",
-    "tailwindcss": "^1.2.0"
+    "tailwindcss": "^1.2.0",
+    "tailwindcss-spinner": "^1.0.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,scss,md}": [
