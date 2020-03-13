@@ -6,7 +6,7 @@ import { Header, Content, Footer } from './components';
 
 function App() {
   return (
-    <div className="container mx-auto">
+    <div className="flex flex-col">
       <Header />
       <Content />
       <Footer />
