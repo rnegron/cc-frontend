@@ -1,29 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import api from '../services/api';
 import MovieCard from './MovieCard';
-import { ContentStateInterface, MovieInterface } from '../interfaces';
 import Loading from './Loading';
+import { MovieInterface, MovieStatusInterface } from '../interfaces';
+import { NOW_SHOWING, COMING_SOON } from '../constants';
 
-function parseMovieResults(movieResults: {
-  data: { attributes: MovieInterface }[];
-}) {
+type movieResultsType = { data: { attributes: MovieInterface }[] };
+
+function parseMovieResults(movieResults: movieResultsType) {
   return movieResults.data.map((result) => result.attributes);
 }
 
-class Content extends React.Component<{}, ContentStateInterface> {
-  state: ContentStateInterface = { movies: [] };
+const Content = ({ movieStatus }: MovieStatusInterface) => {
+  const [movies, setMovies] = useState<MovieInterface[]>([]);
 
-  async componentDidMount() {
-    // Perform API call to get movies
-    const response = await api.get('/');
-    this.setState({ movies: parseMovieResults(response.data) });
-  }
+  useEffect(() => {
+    const fetchMovies = async () => {
+      let response;
+      if (movieStatus === NOW_SHOWING) {
+        response = await api.get('/now-showing');
+      } else if (movieStatus === COMING_SOON) {
+        response = await api.get('/coming-soon');
+      } else {
+        throw new Error('Invalid movie status');
+      }
 
-  renderMoviePosters() {
-    const { movies } = this.state;
+      setMovies(parseMovieResults(response.data));
+    };
 
+    fetchMovies();
+  }, [movieStatus]);
+
+  const renderMoviePosters = () => {
     if (isEmpty(movies)) {
       return (
         <div>
@@ -35,15 +45,11 @@ class Content extends React.Component<{}, ContentStateInterface> {
     return movies.map((movie) => (
       <MovieCard key={movie.movieId} movie={movie} />
     ));
-  }
+  };
 
-  render() {
-    return (
-      <div className="flex flex-wrap justify-center">
-        {this.renderMoviePosters()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="flex flex-wrap justify-center">{renderMoviePosters()}</div>
+  );
+};
 
 export default Content;

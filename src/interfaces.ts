@@ -18,3 +18,7 @@ export interface MovieCardPropsInterface {
 export interface ContentStateInterface {
   movies: MovieInterface[];
 }
+
+export interface MovieStatusInterface {
+  movieStatus: string;
+}
