@@ -30,6 +30,10 @@ const Content = ({ movieStatus }: MovieStatusInterface) => {
       setMovies(parseMovieResults(response.data));
     };
 
+    // Remove all movies to trigger the loading screen
+    setMovies([]);
+
+    // Fetch new movies
     fetchMovies();
   }, [movieStatus]);
 
@@ -48,7 +52,9 @@ const Content = ({ movieStatus }: MovieStatusInterface) => {
   };
 
   return (
-    <div className="flex flex-wrap justify-center">{renderMoviePosters()}</div>
+    <div className="flex flex-wrap justify-center content-around">
+      {renderMoviePosters()}
+    </div>
   );
 };
 
