@@ -7,10 +7,9 @@ class Footer extends React.Component {
     return (
       <nav
         id="footer"
-        className="flex justify-center bg-gray-400 py-3 my-2 mx-4 rounded"
+        className="self-center shadow-sm w-full bg-gray-300 py-3 my-2 mx-4 rounded"
       >
-        <span className="flex flex-col items-center text-gray-700">
-          <p className="py-2">Source </p>
+        <span className="flex flex-col align-center items-center text-gray-700">
           <a
             href="https://github.com/rnegron/cc-frontend"
             target="_blank"
