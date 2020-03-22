@@ -5,7 +5,12 @@ import api from '../services/api';
 import MovieCard from './MovieCard';
 import Loading from './Loading';
 import { MovieInterface, MovieStatusInterface } from '../interfaces';
-import { NOW_SHOWING, COMING_SOON } from '../constants';
+import {
+  NOW_SHOWING,
+  COMING_SOON,
+  NOW_SHOWING_PATH,
+  COMING_SOON_PATH,
+} from '../constants';
 
 type movieResultsType = { data: { attributes: MovieInterface }[] };
 
@@ -14,34 +19,46 @@ function parseMovieResults(movieResults: movieResultsType) {
 }
 
 const Content = ({ movieStatus }: MovieStatusInterface) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState<MovieInterface[]>([]);
+
+  const path =
+    movieStatus === NOW_SHOWING ? NOW_SHOWING_PATH : COMING_SOON_PATH;
 
   useEffect(() => {
     const fetchMovies = async () => {
-      let response;
-      if (movieStatus === NOW_SHOWING) {
-        response = await api.get('/now-showing');
-      } else if (movieStatus === COMING_SOON) {
-        response = await api.get('/coming-soon');
-      } else {
-        throw new Error('Invalid movie status');
-      }
+      setIsLoading(true);
+      const response = await api.get(`/${path}`);
 
       setMovies(parseMovieResults(response.data));
+      setIsLoading(false);
     };
-
-    // Remove all movies to trigger the loading screen
-    setMovies([]);
 
     // Fetch new movies
     fetchMovies();
   }, [movieStatus]);
 
   const renderMoviePosters = () => {
-    if (isEmpty(movies)) {
+    if (isLoading) {
       return (
         <div>
           <Loading />
+        </div>
+      );
+    }
+
+    if (isEmpty(movies)) {
+      return (
+        <div className="flex flex-col text-center py-24">
+          <p className="text-2xl">No movies found!</p>
+          <a
+            className="pt-2 font-light text-blue-500 hover:underline"
+            href={`https://caribbeancinemas.com/${path}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Check the official site
+          </a>
         </div>
       );
     }
