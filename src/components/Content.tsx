@@ -5,12 +5,7 @@ import api from '../services/api';
 import MovieCard from './MovieCard';
 import Loading from './Loading';
 import { MovieInterface, MovieStatusInterface } from '../interfaces';
-import {
-  NOW_SHOWING,
-  COMING_SOON,
-  NOW_SHOWING_PATH,
-  COMING_SOON_PATH,
-} from '../constants';
+import { NOW_SHOWING, NOW_SHOWING_PATH, COMING_SOON_PATH } from '../constants';
 
 type movieResultsType = { data: { attributes: MovieInterface }[] };
 
@@ -49,7 +44,7 @@ const Content = ({ movieStatus }: MovieStatusInterface) => {
 
     if (isEmpty(movies)) {
       return (
-        <div className="flex flex-col text-center py-24">
+        <div className="flex flex-col py-24 text-center">
           <p className="text-2xl">No movies found!</p>
           <a
             className="pt-2 font-light text-blue-500 hover:underline"
@@ -69,7 +64,7 @@ const Content = ({ movieStatus }: MovieStatusInterface) => {
   };
 
   return (
-    <div className="flex flex-wrap justify-center content-around">
+    <div className="flex flex-wrap content-around justify-center">
       {renderMoviePosters()}
     </div>
   );
